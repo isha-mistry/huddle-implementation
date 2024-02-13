@@ -95,7 +95,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
   };
 
   return (
-    <div className="absolute bottom-6 w-full flex items-center px-10 justify-between">
+    <div className="w-full flex items-center px-10 justify-between pb-6">
       {/* Bottom Bar Left */}
       <div>
         {role === "host" || role === "coHost" || role === "speaker" ? (
@@ -181,40 +181,44 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         {/* <button onClick={startRecording}>Start Recording</button>
         <button onClick={stopRecording}>stop Recording</button> */}
 
-        <Dropdown
-          triggerChild={BasicIcons.avatar}
-          open={isOpen}
-          onOpenChange={() => setIsOpen((prev) => !prev)}
-        >
-          <EmojiTray
-            onClick={() => alert("todo")}
-            onClose={() => setIsOpen(false)}
-          />
-        </Dropdown>
-        <Dropdown
-          triggerChild={BasicIcons.leave}
-          open={showLeaveDropDown}
-          onOpenChange={() => setShowLeaveDropDown((prev) => !prev)}
-        >
-          {role === "host" && (
+        <div className="flex cursor-pointer items-center">
+          <Dropdown
+            triggerChild={BasicIcons.avatar}
+            open={isOpen}
+            onOpenChange={() => setIsOpen((prev) => !prev)}
+          >
+            <EmojiTray
+              onClick={() => alert("todo")}
+              onClose={() => setIsOpen(false)}
+            />
+          </Dropdown>
+        </div>
+        <div className="flex cursor-pointer items-center">
+          <Dropdown
+            triggerChild={BasicIcons.leave}
+            open={showLeaveDropDown}
+            onOpenChange={() => setShowLeaveDropDown((prev) => !prev)}
+          >
+            {role === "host" && (
+              <Strip
+                type="close"
+                title="End spaces for all"
+                variant="danger"
+                onClick={() => {
+                  closeRoom();
+                }}
+              />
+            )}
             <Strip
-              type="close"
-              title="End spaces for all"
+              type="leave"
+              title="Leave the spaces"
               variant="danger"
               onClick={() => {
-                closeRoom();
+                leaveRoom();
               }}
             />
-          )}
-          <Strip
-            type="leave"
-            title="Leave the spaces"
-            variant="danger"
-            onClick={() => {
-              leaveRoom();
-            }}
-          />
-        </Dropdown>
+          </Dropdown>
+        </div>
       </div>
       <div className="flex items-center gap-4">
         {/* Bottom Bar Right */}

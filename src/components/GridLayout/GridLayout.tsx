@@ -1,9 +1,9 @@
-import { useLocalPeer, usePeerIds } from '@huddle01/react/hooks';
-import { Role } from '@huddle01/server-sdk/auth';
-import CoHosts from './ViewPorts/CoHosts';
-import Hosts from './ViewPorts/Hosts';
-import Speakers from './ViewPorts/Speakers';
-import Listeners from './ViewPorts/Listeners';
+import { useLocalPeer, usePeerIds } from "@huddle01/react/hooks";
+import { Role } from "@huddle01/server-sdk/auth";
+import CoHosts from "./ViewPorts/CoHosts";
+import Hosts from "./ViewPorts/Hosts";
+import Speakers from "./ViewPorts/Speakers";
+import Listeners from "./ViewPorts/Listeners";
 
 type GridLayoutProps = {};
 
@@ -12,7 +12,7 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
   const { role: localPeerRole } = useLocalPeer();
 
   return (
-    <div className="w-full h-full ml-10 flex items-center justify-center flex-col py-20">
+    <div className="w-full flex items-center justify-center flex-col">
       <div className="flex-wrap flex items-center justify-center gap-4 w-full">
         <Hosts />
         <CoHosts />
@@ -20,7 +20,7 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
       </div>
       <div className="mt-10">
         <div className="text-custom-6 text-base font-normal text-center mb-5">
-          Listeners -{' '}
+          Listeners :{" "}
           {peerIds.length +
             (localPeerRole && localPeerRole === Role.LISTENER ? 1 : 0)}
         </div>
