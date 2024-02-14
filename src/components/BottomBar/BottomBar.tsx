@@ -106,7 +106,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             onClick={() => setPromptView("request-to-speak")}
           >
             {BasicIcons.requestToSpeak}
-            <div>Request to speak</div>
+            <div className="text-black ">Request to speak</div>
           </OutlineButton>
         )}
       </div>
@@ -134,8 +134,8 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         {role === "host" &&
           (!isVideoOn ? (
             <button
-              className=" rounded inline-flex items-center"
-              style={{ backgroundColor: "#181A20" }}
+              className="rounded-lg inline-flex items-center"
+              style={{ backgroundColor: "#0500FF" }}
               onClick={() => {
                 enableVideo();
               }}
@@ -144,8 +144,8 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             </button>
           ) : (
             <button
-              className=" rounded inline-flex items-center"
-              style={{ backgroundColor: "#181A20" }}
+              className=" rounded-lg inline-flex items-center"
+              style={{ backgroundColor: "#0500FF" }}
               onClick={() => {
                 disableVideo();
               }}
@@ -156,8 +156,8 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         {role === "host" &&
           (!videoTrack ? (
             <button
-              className=" rounded inline-flex items-center"
-              style={{ backgroundColor: "#181A20" }}
+              className=" rounded-lg inline-flex items-center"
+              style={{ backgroundColor: "#0500FF" }}
               onClick={() => {
                 startScreenShare();
               }}
@@ -166,8 +166,8 @@ const BottomBar: React.FC<BottomBarProps> = () => {
             </button>
           ) : (
             <button
-              className=" rounded inline-flex items-center"
-              style={{ backgroundColor: "#181A20" }}
+              className=" rounded-lg inline-flex items-center"
+              style={{ backgroundColor: "#0500FF" }}
               onClick={() => {
                 stopScreenShare();
               }}
@@ -175,9 +175,13 @@ const BottomBar: React.FC<BottomBarProps> = () => {
               {NestedBasicIcons.active.screen}
             </button>
           ))}
-        <button type="button" className="" onClick={handleRecordingButtonClick}>
+        {/* <button
+          type="button"
+          className="text-white bg-blue-700 px-4 py-2 rounded-full"
+          onClick={handleRecordingButtonClick}
+        >
           {isRecording ? "Stop Recording" : "Start Recording"}
-        </button>
+        </button> */}
         {/* <button onClick={startRecording}>Start Recording</button>
         <button onClick={stopRecording}>stop Recording</button> */}
 
@@ -224,7 +228,7 @@ const BottomBar: React.FC<BottomBarProps> = () => {
         {/* Bottom Bar Right */}
 
         <OutlineButton
-          className="ml-auto flex items-center gap-3"
+          className="ml-auto flex items-center gap-3 border-[#0500FF]"
           onClick={() => {
             setSidebarView(sidebarView === "peers" ? "close" : "peers");
             if (isChatOpen) {
@@ -233,13 +237,13 @@ const BottomBar: React.FC<BottomBarProps> = () => {
           }}
         >
           {BasicIcons.peers}
-          <span>
+          <span className="text-black">
             {Object.keys(peerIds).filter((peerId) => peerId !== localPeerId)
               .length + 1}
           </span>
         </OutlineButton>
         <OutlineButton
-          className="ml-auto flex items-center gap-3"
+          className="ml-auto flex items-center gap-3 border-[#0500FF]"
           onClick={() => {
             setIsChatOpen(!isChatOpen);
             if (sidebarView !== "close") {

@@ -54,12 +54,12 @@ const LocalGridCard: FC = () => {
 
   return (
     <div
-      className={`relative flex flex-col items-center justify-center rounded-xl bg-black text-white p-4 ${
-        role && ["host", "coHost", "speaker"].includes(role) ? "pb-10" : ""
+      className={`relative flex items-center justify-center rounded-xl border-2 border-blue-700 text-white p-6 ${
+        role && ["host", "coHost", "speaker"].includes(role) ? "pb-6" : ""
       }`}
     >
       {(!stream || !shareStream) && (
-        <>
+        <div className="flex flex-col">
           <Image
             src={metadata?.avatarUrl || "/avatar/avatar/0.png"}
             alt="default-avatar"
@@ -71,10 +71,10 @@ const LocalGridCard: FC = () => {
           />
 
           <div className="mt-1 text-center">
-            <div className="text-custom-5 text-base font-medium">
+            <div className="text-gray-700 text-base font-medium">
               {`${metadata?.displayName} (You)`}
             </div>
-            <div className="text-custom-6 text-sm font-normal">{role}</div>
+            <div className="text-gray-500 text-sm font-normal">{role}</div>
           </div>
 
           <div className="absolute left-1/2 bottom-1/2 -translate-x-1/2 mb-2 text-4xl">
@@ -90,16 +90,16 @@ const LocalGridCard: FC = () => {
               ✋
             </div>
           )}
-        </>
+        </div>
       )}
 
       {shareStream ? (
-        <div className="grid grid-cols-2 gap-4 mt-2 w-full">
+        <div className="grid grid-cols-2 gap-4 mt-2">
           {stream && (
             <div className="col-span-1">
               <video
                 ref={videoRef}
-                className="aspect-video rounded-xl"
+                className="aspect-video rounded-xl h-[50%]"
                 autoPlay
                 muted
               />
@@ -118,7 +118,7 @@ const LocalGridCard: FC = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 mt-2 w-full">
+        <div className="grid grid-cols-2 gap-4 mt-2">
           {stream && (
             <div className="col-span-2">
               <video

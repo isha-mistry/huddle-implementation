@@ -94,15 +94,16 @@ const Home = ({ params }: { params: { roomId: string } }) => {
   }, [requestedPeers]);
 
   return (
-    <section className="bg-audio flex h-screen text-slate-100 flex-col justify-between">
-      <div className="flex w-full h-full pb-4">
+    <section className="bg-white flex h-screen text-slate-100 flex-col justify-between overflow-hidden">
+      <div className="flex w-full h-[90%] pb-4">
         <GridLayout />
         <Sidebar />
         <div className="absolute right-4 bottom-20">
           {showAcceptRequest && <AcceptRequest peerId={requestedPeerId} />}
         </div>
+        {isChatOpen && <Chat />}
       </div>
-      {isChatOpen && <Chat />}
+
       <BottomBar />
       <Prompts />
     </section>
