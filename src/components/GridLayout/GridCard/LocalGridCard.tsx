@@ -54,12 +54,12 @@ const LocalGridCard: FC = () => {
 
   return (
     <div
-      className={`relative flex items-center justify-center rounded-xl border-2 border-blue-700 text-white p-6 ${
+      className={`flex h-full justify-between rounded-xl text-white p-6 ${
         role && ["host", "coHost", "speaker"].includes(role) ? "pb-6" : ""
       }`}
     >
       {(!stream || !shareStream) && (
-        <div className="flex flex-col">
+        <div className="relative flex flex-col mx-10">
           <Image
             src={metadata?.avatarUrl || "/avatar/avatar/0.png"}
             alt="default-avatar"
@@ -99,7 +99,7 @@ const LocalGridCard: FC = () => {
             <div className="col-span-1">
               <video
                 ref={videoRef}
-                className="aspect-video rounded-xl h-[50%]"
+                className="aspect-video rounded-xl h-48 w-full"
                 autoPlay
                 muted
               />
@@ -108,7 +108,7 @@ const LocalGridCard: FC = () => {
 
           <div className={stream ? "col-span-1" : "col-span-2"}>
             <video
-              className="aspect-video rounded-xl"
+              className="aspect-video rounded-xl h-48 w-full"
               ref={(screenShareRef) =>
                 screenShareRef && (screenShareRef.srcObject = shareStream)
               }
@@ -118,12 +118,12 @@ const LocalGridCard: FC = () => {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-2 gap-4 mt-2">
+        <div className="grid grid-cols-2 mt-2">
           {stream && (
             <div className="col-span-2">
               <video
                 ref={videoRef}
-                className="aspect-video rounded-xl"
+                className="aspect-video rounded-xl h-48 w-full"
                 autoPlay
                 muted
               />

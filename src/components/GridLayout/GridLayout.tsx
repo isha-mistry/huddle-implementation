@@ -4,16 +4,47 @@ import CoHosts from "./ViewPorts/CoHosts";
 import Hosts from "./ViewPorts/Hosts";
 import Speakers from "./ViewPorts/Speakers";
 import Listeners from "./ViewPorts/Listeners";
+import {
+  useDataMessage,
+  useRemoteAudio,
+  useRemotePeer,
+  useRemoteVideo,
+  useRemoteScreenShare,
+} from "@huddle01/react/hooks";
 
 type GridLayoutProps = {};
 
 const GridLayout: React.FC<GridLayoutProps> = () => {
-  const { peerIds } = usePeerIds({ roles: [Role.LISTENER] });
-  const { role: localPeerRole } = useLocalPeer();
+  // const { peerIds } = usePeerIds({ roles: [Role.LISTENER] });
+  const { peerId: localPeerId, role: localPeerRole } = useLocalPeer();
+  const { peerIds } = usePeerIds({ roles: [Role.HOST, Role.LISTENER] });
+  console.log("peerIds----- ", peerIds);
+  console.log("Peer id: ", peerIds[0]);
+  const hostId = peerIds[0];
+  const { stream: videoStream, state } = useRemoteVideo({ peerId: hostId });
+
+  const {
+    videoStream: screenShareVideoStream,
+    audioStream: screenShareAudioStream,
+    state: screenShareState,
+  } = useRemoteScreenShare({
+    peerId: hostId,
+    onPlayable: (data) => {
+      console.log("Ready to play remote peer's screen being shared!");
+      // your code here
+    },
+    onClose: () => {
+      console.log("Remote peer has stopped sharing their screen!");
+      // your code here
+    },
+  });
+
+  console.log("screenShareVideoStream:::: ", screenShareVideoStream);
+  console.log("videoStream::: ", videoStream);
 
   return (
     <div className="w-full flex items-center justify-center flex-col h-full">
-      <div className="flex-wrap flex items-center justify-center gap-4 w-full h-[45%]">
+      <div className="flex-wrap flex items-center justify-center gap-4 h-[45%]">
         <Hosts />
         <CoHosts />
         <Speakers />
@@ -25,8 +56,14 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
             (localPeerRole && localPeerRole === Role.LISTENER ? 1 : 0)}
         </div>
 
-        <div className="flex flex-wrap items-center justify-center gap-6 w-full overflow-hidden">
-          <Listeners />
+        <div className="flex flex-wrap items-center justify-center gap-6 w-full">
+          {screenShareVideoStream || videoStream ? (
+            <div className="hidden">
+              <Listeners />
+            </div>
+          ) : (
+            <Listeners />
+          )}
         </div>
       </div>
     </div>

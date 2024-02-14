@@ -80,7 +80,7 @@ const GridCard: React.FC<GridCardProps> = ({ peerId }) => {
     },
   });
   return (
-    <div className="relative flex items-center justify-center flex-col p-4 rounded-lg shadow-md">
+    <div className="flex justify-center items-center flex-col p-4 rounded-lg shadow-md">
       <div className="grid grid-cols-2 gap-4 w-full h-full">
         {screenShareVideoStream && (
           <video
@@ -96,7 +96,7 @@ const GridCard: React.FC<GridCardProps> = ({ peerId }) => {
           <video ref={vidRef} autoPlay playsInline className="w-full h-full" />
         )}
       </div>
-      <div className="mt-4">
+      <div className="relative mt-4">
         {audioStream && <AudioElem peerId={peerId} />}
         <Image
           src={metadata?.avatarUrl || "/avatar/avatar/0.png"}
