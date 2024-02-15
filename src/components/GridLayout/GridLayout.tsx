@@ -1,4 +1,9 @@
-import { useLocalPeer, usePeerIds } from "@huddle01/react/hooks";
+import {
+  useLocalPeer,
+  useLocalScreenShare,
+  useLocalVideo,
+  usePeerIds,
+} from "@huddle01/react/hooks";
 import { Role } from "@huddle01/server-sdk/auth";
 import CoHosts from "./ViewPorts/CoHosts";
 import Hosts from "./ViewPorts/Hosts";
@@ -22,6 +27,9 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
   console.log("Peer id: ", peerIds[0]);
   const hostId = peerIds[0];
   const { stream: videoStream, state } = useRemoteVideo({ peerId: hostId });
+  const { startScreenShare, stopScreenShare, shareStream, videoTrack } =
+    useLocalScreenShare();
+  const { enableVideo, isVideoOn, stream, disableVideo } = useLocalVideo();
 
   const {
     videoStream: screenShareVideoStream,
@@ -57,13 +65,7 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
         </div>
 
         <div className="flex flex-wrap items-center justify-center gap-6 w-full">
-          {screenShareVideoStream || videoStream ? (
-            <div className="hidden">
-              <Listeners />
-            </div>
-          ) : (
-            <Listeners />
-          )}
+          {localPeerRole == Role.HOST ? <Listeners /> : ""}
         </div>
       </div>
     </div>
