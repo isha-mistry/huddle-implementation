@@ -1,16 +1,15 @@
-import { PeerListIcons } from '@/assets/PeerListIcons';
-import useStore from '@/store/slices';
-import { useRemotePeer } from '@huddle01/react/hooks';
-import { Role } from '@huddle01/server-sdk/auth';
-import Image from 'next/image';
-import { FC } from 'react';
+import { PeerListIcons } from "@/assets/PeerListIcons";
+import useStore from "@/store/slices";
+import { useLocalPeer, useRemotePeer } from "@huddle01/react/hooks";
+import { Role } from "@huddle01/server-sdk/auth";
+import Image from "next/image";
+import { FC } from "react";
 
 interface AcceptDenyPeerProps {
   peerId: string;
 }
 
 const AcceptDenyPeer: FC<AcceptDenyPeerProps> = ({ peerId }) => {
-
   const { metadata, updateRole } = useRemotePeer<{
     displayName: string;
     avatarUrl: string;
@@ -18,12 +17,13 @@ const AcceptDenyPeer: FC<AcceptDenyPeerProps> = ({ peerId }) => {
   }>({ peerId });
 
   const removeRequestedPeers = useStore((state) => state.removeRequestedPeers);
+  const { peerId: localPeerId, role: localPeerRole } = useLocalPeer();
 
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         <Image
-          src={metadata?.avatarUrl ?? '/avatars/avatars/0.png'}
+          src={metadata?.avatarUrl ?? "/avatars/avatars/0.png"}
           alt="default"
           width={30}
           height={30}
@@ -36,15 +36,21 @@ const AcceptDenyPeer: FC<AcceptDenyPeerProps> = ({ peerId }) => {
         </div>
       </div>
       <div className="flex items-center gap-4">
-        <div role="presentation" onClick={() => {
+        <div
+          role="presentation"
+          onClick={() => {
             updateRole(Role.SPEAKER);
             removeRequestedPeers(peerId);
-        }}>
+          }}
+        >
           {PeerListIcons.accept}
         </div>
-        <div role="presentation" onClick={() => {
+        <div
+          role="presentation"
+          onClick={() => {
             removeRequestedPeers(peerId);
-        }}>
+          }}
+        >
           {PeerListIcons.deny}
         </div>
       </div>

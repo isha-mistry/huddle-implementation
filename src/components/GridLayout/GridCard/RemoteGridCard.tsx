@@ -81,51 +81,66 @@ const GridCard: React.FC<GridCardProps> = ({ peerId }) => {
   });
   return (
     <div className="flex justify-center items-center flex-col p-4 rounded-lg shadow-md">
-      <div className="grid grid-cols-2 gap-4 w-full h-full">
+      <div className="grid grid-cols-2 gap-4 w-full">
         {screenShareVideoStream && (
-          <video
-            autoPlay
-            playsInline
-            className="w-full h-full"
-            ref={(screenRef) =>
-              screenRef && (screenRef.srcObject = screenShareVideoStream)
-            }
-          />
+          <div className={!videoStream ? "col-span-2 h-96" : "col-span-1"}>
+            <video
+              autoPlay
+              playsInline
+              className="w-full mt-6 h-[23rem]"
+              ref={(screenRef) =>
+                screenRef && (screenRef.srcObject = screenShareVideoStream)
+              }
+            />
+          </div>
         )}
         {videoStream && (
-          <video ref={vidRef} autoPlay playsInline className="w-full h-full" />
+          <div
+            className={
+              !screenShareVideoStream ? "col-span-2 h-96" : "col-span-1"
+            }
+          >
+            <video
+              ref={vidRef}
+              autoPlay
+              playsInline
+              className="w-full mt-6 h-[23rem]"
+            />
+          </div>
         )}
       </div>
-      <div className="relative mt-4">
-        {audioStream && <AudioElem peerId={peerId} />}
-        <Image
-          src={metadata?.avatarUrl || "/avatar/avatar/0.png"}
-          alt="default-avatar"
-          width={100}
-          height={100}
-          quality={100}
-          priority
-          className="maskAvatar"
-        />
+      {(!screenShareVideoStream || !videoStream) && (
+        <div className="relative mt-4">
+          {audioStream && <AudioElem peerId={peerId} />}
+          <Image
+            src={metadata?.avatarUrl || "/avatar/avatar/0.png"}
+            alt="default-avatar"
+            width={100}
+            height={100}
+            quality={100}
+            priority
+            className="maskAvatar"
+          />
 
-        <div className="mt-1 text-center">
-          <div className="text-custom-5 text-base font-medium">
-            {metadata?.displayName}
+          <div className="mt-1 text-center">
+            <div className="text-custom-5 text-base font-medium">
+              {metadata?.displayName}
+            </div>
+            <div className="text-custom-6 text-sm font-normal">{role}</div>
           </div>
-          <div className="text-custom-6 text-sm font-normal">{role}</div>
-        </div>
-        <div className="absolute left-1/2 bottom-1/2 -translate-x-1/2 mb-2 text-4xl">
-          {reaction}
-        </div>
-        {role && ["host", "coHost", "speaker"].includes(role) && (
-          <div className="absolute right-0">{BasicIcons.audio}</div>
-        )}
-        {metadata?.isHandRaised && (
-          <div className="absolute flex right-2 w-8 h-8 -top-1 rounded-full justify-center items-center bg-custom-8 text-xl border-custom-1 border-2">
-            ✋
+          <div className="absolute left-1/2 bottom-1/2 -translate-x-1/2 mb-2 text-4xl">
+            {reaction}
           </div>
-        )}
-      </div>
+          {role && ["host", "coHost", "speaker"].includes(role) && (
+            <div className="absolute right-0">{BasicIcons.audio}</div>
+          )}
+          {metadata?.isHandRaised && (
+            <div className="absolute flex right-2 w-8 h-8 -top-1 rounded-full justify-center items-center bg-custom-8 text-xl border-custom-1 border-2">
+              ✋
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

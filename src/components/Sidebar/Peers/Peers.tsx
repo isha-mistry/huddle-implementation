@@ -35,7 +35,7 @@ const Peers: React.FC<PeersProps> = () => {
     <div>
       <MuteMicDiv onClick={muteEveryone} />
 
-      {requestedPeers.length > 0 && (
+      {requestedPeers.length > 0 && me.role === Role.HOST && (
         <PeerList className="mt-5" title="Requested to Speak">
           {requestedPeers.map((peerId) => {
             return <AcceptDenyPeer key={`sidebar-${peerId}`} peerId={peerId} />;

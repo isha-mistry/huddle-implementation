@@ -52,19 +52,21 @@ const GridLayout: React.FC<GridLayoutProps> = () => {
 
   return (
     <div className="w-full flex items-center justify-center flex-col h-full">
-      <div className="flex-wrap flex items-center justify-center gap-4 h-[45%]">
+      <div className="flex-wrap flex items-center justify-center gap-4">
         <Hosts />
-        <CoHosts />
-        <Speakers />
       </div>
-      <div className="mt-2 h-[55%]">
-        <div className="text-custom-6 text-base font-normal text-center mb-5">
-          Listeners :{" "}
-          {peerIds.length +
-            (localPeerRole && localPeerRole === Role.LISTENER ? 1 : 0)}
-        </div>
+      <div className="mt-2">
+        {(!screenShareVideoStream || !videoStream) && (
+          <div className="text-custom-6 text-base font-normal text-center mb-5">
+            Listeners :{" "}
+            {peerIds.length +
+              (localPeerRole && localPeerRole === Role.LISTENER ? 1 : 0)}
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center justify-center gap-6 w-full">
+          <CoHosts />
+          <Speakers />
           {localPeerRole == Role.HOST ? <Listeners /> : ""}
         </div>
       </div>
